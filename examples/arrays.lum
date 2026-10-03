@@ -1,0 +1,39 @@
+// examples/arrays.lum -- heap arrays, the length header, and value semantics.
+func sum(xs: int[]) -> int {
+    let total: int = 0;
+    for i in 0..len(xs) {
+        total += xs[i];
+    }
+    return total;
+}
+
+func main() -> int {
+    let xs: int[] = [3, 1, 4, 1, 5, 9, 2, 6];
+    print "xs       =", xs;
+    print "len(xs)  =", len(xs);
+    print "sum(xs)  =", sum(xs);
+
+    // Arrays are values: this copies the payload, it does not alias it.
+    let ys: int[] = xs;
+    ys[0] = 99;
+    print "after ys[0] = 99:";
+    print "  xs =", xs;
+    print "  ys =", ys;
+
+    // Assignment grows the destination when the sizes differ.
+    let zs: int[] = [1, 2];
+    zs = [7, 8, 9, 10, 11];
+    print "zs =", zs, " len =", len(zs);
+
+    let empty: int[] = [];
+    print "empty =", empty, " len =", len(empty);
+
+    let names: string[] = ["alpha", "beta", "gamma"];
+    print "names =", names;
+
+    let matrix: int[][] = [[1, 2, 3], [4, 5, 6]];
+    print "matrix =", matrix;
+    print "row 1  =", matrix[1];
+    print "cell   =", matrix[1][2];
+    return 0;
+}

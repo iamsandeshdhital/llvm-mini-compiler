@@ -1,0 +1,7 @@
+# Normalize line endings so diffs stay readable across platforms.
+* text=auto eol=lf
+
+# Generated or native artifacts should never be diffed as text.
+*.ll binary
+*.o binary
+*.exe binary

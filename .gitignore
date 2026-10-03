@@ -1,0 +1,36 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+
+# Generated LLVM IR (build artifacts)
+*.ll
+
+# Native build artifacts
+*.o
+*.obj
+*.exe
+
+# Editor / OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

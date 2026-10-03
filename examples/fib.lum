@@ -1,0 +1,28 @@
+// examples/fib.lum -- recursion, multiple returns, integer division.
+func fib(n: int) -> int {
+    if n < 2 {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+func gcd(a: int, b: int) -> int {
+    while b != 0 {
+        let t: int = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+func main() -> int {
+    let i: int = 0;
+    while i <= 15 {
+        print "fib", i, "=", fib(i);
+        i += 1;
+    }
+    print "gcd(1071, 462) = ", gcd(1071, 462);
+    print "10 / 3 = ", 10 / 3;
+    print "10 % 3 = ", 10 % 3;
+    return 0;
+}

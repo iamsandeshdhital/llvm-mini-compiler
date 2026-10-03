@@ -1,0 +1,68 @@
+// examples/types.lum -- floats, bools, short-circuiting, shadowing, strings.
+func classify(n: int) -> string {
+    if n < 0 {
+        return "negative";
+    } else if n == 0 {
+        return "zero";
+    } else {
+        return "positive";
+    }
+}
+
+func always_true() -> bool {
+    print "  (always_true ran)";
+    return true;
+}
+
+func never_reached() -> bool {
+    print "  (never_reached ran)";
+    return true;
+}
+
+func main() -> int {
+    // floats widen from int literals automatically
+    let pi: float = 3.14159;
+    let half: float = 0.5;
+    print "pi       =", pi;
+    print "pi * 2   =", pi * 2.0;
+    print "half     =", half;
+
+    // bools are not numbers; comparisons produce them
+    let big: bool = 3 > 2;
+    let eq: bool = "abc" == "abc";
+    let ne: bool = "abc" != "abd";
+    print "3 > 2      =", big;
+    print "abc == abc =", eq;
+    print "abc != abd =", ne;
+
+    // short-circuit: never_reached must not run
+    print "false && never_reached():";
+    print "  result =", false && never_reached();
+    print "true || never_reached():";
+    print "  result =", true || never_reached();
+    print "true && always_true():";
+    print "  result =", true && always_true();
+
+    print "classify(-5) =", classify(-5);
+    print "classify(0)  =", classify(0);
+    print "classify(7)  =", classify(7);
+
+    print "len(\"lumen\") =", len("lumen");
+
+    // shadowing in an inner block
+    let x: int = 1;
+    {
+        let x: int = 2;
+        print "inner x =", x;
+    }
+    print "outer x =", x;
+
+    // compound assignment
+    let acc: int = 0;
+    for i in 1..5 {
+        acc *= i;
+        acc += 1;
+    }
+    print "acc =", acc;
+    return 0;
+}

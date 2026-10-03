@@ -1,0 +1,64 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    env:
+      PYTHONPATH: src
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+  verify-examples:
+    name: verify examples
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: hello.lum
+        run: python -m lumen examples/hello.lum --run-ir --verify-ir
+      - name: fib.lum
+        run: python -m lumen examples/fib.lum --run-ir --verify-ir
+      - name: arrays.lum
+        run: python -m lumen examples/arrays.lum --run-ir --verify-ir
+      - name: types.lum
+        run: python -m lumen examples/types.lum --run-ir --verify-ir
+
+  build:
+    name: native build (clang)
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install clang
+        run: sudo apt-get update && sudo apt-get install -y clang
+      - name: Compile and run natively
+        run: python -m lumen examples/hello.lum --run --verify-ir
